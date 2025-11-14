@@ -40,9 +40,10 @@ namespace BeeBuzz.Data.Seeding
             {
                 Name = "0000-0000-0000-0000"
             };
-            if (!_db.Organizations.Any())
+            // Stuck here v : Invalid Object Name
+            if (!_db.Organization.Any())
             {
-                _db.Organizations.Add(organization);
+                _db.Organization.Add(organization);
                 _db.SaveChanges();
             }
 
@@ -50,21 +51,21 @@ namespace BeeBuzz.Data.Seeding
 
             var seeData = LoadSeedData();
 
-            if(!_db.Beehives.Any())
+            if(!_db.Beehive.Any())
             {
                 foreach (Beehive hive in seeData)
                 {
                     hive.User = admin;
                 }
-                _db.Beehives.AddRange(seeData);
+                _db.Beehive.AddRange(seeData);
 
                 _db.SaveChanges();
             }
 
         }
-        private ICollection<Beehive> LoadSeedData()
+        private IEnumerable<Beehive> LoadSeedData()
         {
-            var filePath = Path.Combine(_hosting.ContentRootPath, "Data/data.json");
+            var filePath = Path.Combine(_hosting.ContentRootPath, "Data\\data.json");
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"Seed data file not found: {filePath}");
@@ -75,7 +76,7 @@ namespace BeeBuzz.Data.Seeding
                 PropertyNameCaseInsensitive = true
             };
 
-            var data = JsonSerializer.Deserialize<ICollection<Beehive>>(json, options);
+            var data = JsonSerializer.Deserialize<IEnumerable<Beehive>>(json, options);
             return data ?? [];
         }
 
@@ -109,7 +110,7 @@ namespace BeeBuzz.Data.Seeding
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(adminUser, adminRoleName);
-
+                    _db.SaveChanges();
                     return adminUser;
                 }
                 else
