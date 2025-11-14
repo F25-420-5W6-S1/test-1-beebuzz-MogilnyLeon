@@ -1,0 +1,24 @@
+﻿{
+  "Beehives": [
+    {
+      "Address": "Home123",
+      "IsActive": true,
+      "DeactivationReason": null
+    },
+    {
+      "Address": "Dead321",
+      "IsActive": false,
+      "DeactivationReason": "All bees are gone"
+    },
+    {
+      "Address": "AdminHive",
+      "IsActive": true,
+      "DeactivationReason": null
+    },
+    {
+      "Address": "RelocatingHive",
+      "IsActive": false,
+      "DeactivationReason": "Currently relocating"
+    }
+  ]
+}
